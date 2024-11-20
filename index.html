@@ -34,7 +34,7 @@
 
         // 3. Add Airbnb GeoJSON Data
         var airbnb_listings = null;
-        airbnb_listings = L.geoJson.ajax("assets/airbnb_listings.geojson", {
+        airbnb_listings = L.geoJson.ajax("airbnb_listings.geojson", {
             attribution: 'Airbnb Listings &copy; Inside Airbnb | Map Author: YourNameHere',
             pointToLayer: function (feature, latlng) {
                 return L.circleMarker(latlng, {
@@ -50,7 +50,7 @@
 
         // 4. Add Zoning Districts GeoJSON Data
         var zoning_districts = null;
-        zoning_districts = L.geoJson.ajax("assets/zoning_districts.geojson", {
+        zoning_districts = L.geoJson.ajax("zoning_districts.geojson", {
             attribution: 'Zoning Districts &copy; City of Asheville Open Data | Map Author: YourNameHere',
             style: function (feature) {
                 return {
