@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Buncombe County Airbnbs (2020)</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.0/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.7.0/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.min.js"></script>
+    <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        // 1. Create a map object
+        var mymap = L.map('map', {
+            center: [35.5946, -82.5540], // Centered on downtown Asheville
+            zoom: 11, 
+            maxZoom: 18, 
+            minZoom: 11, 
+            detectRetina: true // High-resolution detection
+        });
+
+        // 2. Add a base map
+        L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors & CartoDB',
+        }).addTo(mymap);
+
+        // 3. Add Airbnb GeoJSON Data
+        var airbnb_listings = null;
+        airbnb_listings = L.geoJson.ajax("assets/airbnb_listings.geojson", {
+            attribution: 'Airbnb Listings &copy; Inside Airbnb | Map Author: YourNameHere',
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, {
+                    radius: 5,
+                    fillColor: "#ff7800",
+                    color: "#000",
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                });
+            }
+        }).addTo(mymap);
+
+        // 4. Add Zoning Districts GeoJSON Data
+        var zoning_districts = null;
+        zoning_districts = L.geoJson.ajax("assets/zoning_districts.geojson", {
+            attribution: 'Zoning Districts &copy; City of Asheville Open Data | Map Author: YourNameHere',
+            style: function (feature) {
+                return {
+                    color: "#006400",
+                    weight: 2,
+                    fillOpacity: 0.2
+                };
+            }
+        }).addTo(mymap);
+    </script>
+</body>
+</html>
